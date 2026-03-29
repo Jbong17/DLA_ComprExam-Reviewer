@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>DLA Comprehensive Exam Reviewer — Jerald B. Bongalos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Crimson Pro','Georgia',serif;background:#f5f5f0;color:#1a1a1a;-webkit-font-smoothing:antialiased}
+.hdr{background:linear-gradient(135deg,#0f172a,#1e293b 60%,#1a0f3d)}
+.hdr-inner{max-width:1400px;margin:0 auto;padding:48px 48px 40px}
+.body-wrap{max-width:1400px;margin:0 auto;padding:24px 48px 40px}
+.week{margin-bottom:6px;border:1px solid #e2e2dc;border-radius:10px;overflow:hidden;background:#fff;transition:box-shadow 0.2s}
+.week.open{box-shadow:0 2px 16px rgba(0,0,0,0.07)}
+.wh{padding:16px 24px;cursor:pointer;display:flex;align-items:center;gap:14px;user-select:none}
+.wh:hover{background:#fafaf8}
+.arr{font-size:16px;color:#9ca3af;transition:transform 0.15s;width:18px;text-align:center;flex-shrink:0}
+.arr.open{transform:rotate(90deg)}
+.wb{border-top:1px solid #f0f0ec}
+.nb-row{padding:14px 24px 8px 56px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn-colab{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;background:#F9AB00;color:#1a1a1a;border:none;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;text-decoration:none;cursor:pointer;transition:opacity 0.15s}
+.btn-colab:hover{opacity:0.85}
+.btn-dl{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;background:#fff;color:#374151;border:1px solid #d1d5db;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;text-decoration:none;cursor:pointer;transition:background 0.15s}
+.btn-dl:hover{background:#f9fafb}
+.topics{padding:6px 24px 10px 56px}
+.topic{border-left:2.5px solid transparent;padding:12px 0 12px 16px;margin-top:3px}
+.chk{width:20px;height:20px;border-radius:50%;flex-shrink:0;border:2px solid #d1d5db;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:all 0.15s}
+.chk.done{border:none;background:#10b981}
+.pri{font-size:10px;font-family:'JetBrains Mono',monospace;padding:2px 6px;border-radius:3px;letter-spacing:0.3px}
+.sk{font-size:11px;padding:2px 8px;border-radius:4px;background:#f3f4f6;color:#4b5563}
+.qs-sec{border-top:1px solid #f0f0ec;padding:0 24px 14px 56px}
+.q-item{border-left:3px solid #8b5cf625;padding:10px 0 10px 16px;margin-top:4px;border-radius:0 6px 6px 0;transition:background 0.15s}
+.q-item.open{background:#faf8ff}
+.ans-box{margin-top:10px;padding:14px 16px;background:#fff;border:1px solid #e5e7eb;border-radius:8px;font-size:13.5px;color:#374151;line-height:1.6}
+.kc-row{margin-top:8px;display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.kc{font-size:11px;padding:3px 10px;border-radius:4px;background:#ede9fe;color:#5b21b6;font-family:'JetBrains Mono',monospace}
+.tips{border:1px solid #e2e2dc;border-radius:10px;background:#fff;padding:24px 28px;margin-bottom:30px}
+.tip{font-size:14px;color:#4b5563;padding:6px 0 6px 18px;border-left:2.5px solid #e5e7eb}
+.ftr{background:#0f172a;color:#64748b;padding:20px 48px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px}
+.pbar{background:rgba(255,255,255,0.1);border-radius:6px;height:10px;overflow:hidden;flex:1 1 300px;max-width:500px}
+.pbar-fill{background:linear-gradient(90deg,#a78bfa,#8b5cf6);height:100%;border-radius:6px;transition:width 0.4s}
+.circ{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+@media(max-width:768px){
+  .hdr-inner{padding:32px 20px 28px}
+  .body-wrap{padding:16px 16px 30px}
+  .wh{padding:14px 16px;gap:10px}
+  .nb-row{padding:12px 16px 6px 40px}
+  .topics{padding:4px 16px 8px 40px}
+  .qs-sec{padding:0 16px 12px 40px}
+  .ftr{padding:16px 20px}
+  .hdr-inner h1{font-size:24px!important}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script>
+// ─── Repository Configuration ───────────────────────────────────────────────
+var REPO = "Jbong17/DLA_ComprExam-Reviewer";
+var BRANCH = "main";
+var GH_RAW = "https://raw.githubusercontent.com/" + REPO + "/" + BRANCH + "/";
+var GH_COLAB = "https://colab.research.google.com/github/" + REPO + "/blob/" + BRANCH + "/";
+
+// ─── Notebook Registry ───────────────────────────────────────────────────────
+// Exact filenames as they appear in your GitHub repository
+var NB = {
+  1: "DLA_Notebook1_Neural_Network_Fundamentals.ipynb",
+  2: "DLA_Notebook2_CNN.ipynb",
+  3: "DLA_Notebook3_RNN_LSTM.ipynb",
+  4: "DLA_Notebook4_Detection_Segmentation.ipynb",
+  5: "DLA_Notebook5_Representation_Learning.ipynb",
+  6: "DLA_Notebook6_Generative_Models.ipynb"
+};
+
+function colabUrl(w) {
+  return GH_COLAB + encodeURIComponent(NB[w]);
+}
+
+function downloadUrl(w) {
+  return GH_RAW + encodeURIComponent(NB[w]);
+}
+
+// ─── React Helpers ────────────────────────────────────────────────────────────
+var h = React.createElement;
+var us = React.useState;
+var ue = React.useEffect;
+var M = "'JetBrains Mono',monospace";
+
+// ─── Priority Colours ─────────────────────────────────────────────────────────
+var PCS = {
+  CRITICAL: { bg: "#fee2e2", tx: "#991b1b", bd: "#fca5a5" },
+  HIGH:     { bg: "#fef3c7", tx: "#92400e", bd: "#fcd34d" },
+  MEDIUM:   { bg: "#dbeafe", tx: "#1e40af", bd: "#93c5fd" }
+};
+var IBS = { CRITICAL: "#dc2626", HIGH: "#d97706", REVIEW: "#059669" };
+function pc(p) { return PCS[p] || { bg: "#f3f4f6", tx: "#374151", bd: "#d1d5db" }; }
+
+// ─── Curriculum Data ──────────────────────────────────────────────────────────
+var W = [
+  {
+    id: 1,
+    t: "Neural Network Fundamentals",
+    int: "CRITICAL",
+    hrs: "20–25",
+    ch: "Notebook 1",
+    c: "#1a3a5c",
+    topics: [
+      { id:"w1t1", n:"Perceptron and Universal Approximation", d:"Single neuron, XOR problem, UAT: depth vs width", ch:"§1.1–1.2", sk:["UAT","Depth vs width"], p:"CRITICAL" },
+      { id:"w1t2", n:"Activation Functions", d:"Sigmoid, tanh, ReLU, GELU, Swish: dying neuron, saturation, modern defaults", ch:"§1.3", sk:["ReLU variants","Dying neuron","Saturation"], p:"CRITICAL" },
+      { id:"w1t3", n:"Forward Pass & Loss Functions", d:"Cross-entropy, MSE, Huber; softmax numerics", ch:"§1.4", sk:["Forward pass","Loss choice"], p:"CRITICAL" },
+      { id:"w1t4", n:"Backpropagation", d:"Chain rule, computational graphs, vanishing/exploding gradients", ch:"§1.5", sk:["Derive backprop","Gradient flow"], p:"CRITICAL" },
+      { id:"w1t5", n:"Optimizers", d:"SGD, momentum, AdaGrad, RMSProp, Adam; LR schedules, warm-up", ch:"§1.6", sk:["Adam vs SGD","LR schedules"], p:"CRITICAL" },
+      { id:"w1t6", n:"Regularization", d:"L1/L2, Dropout, BatchNorm, LayerNorm, data augmentation; bias-variance", ch:"§1.7", sk:["Regularization","BatchNorm math"], p:"CRITICAL" }
+    ],
+    qs: [
+      { q:"Derive the backpropagation update for a two-layer network with cross-entropy loss. Where do vanishing gradients arise?",
+        a:"For network y=softmax(W₂·relu(W₁x+b₁)+b₂): forward pass computes z₁=W₁x+b₁, a₁=relu(z₁), z₂=W₂a₁+b₂, ŷ=softmax(z₂). Loss L=−Σyₖlog(ŷₖ). Backward: ∂L/∂z₂=ŷ−y, ∂L/∂W₂=(ŷ−y)a₁ᵀ, ∂L/∂a₁=W₂ᵀ(ŷ−y), ∂L/∂z₁=∂L/∂a₁⊙relu'(z₁). Vanishing gradients arise (1) in sigmoid/tanh saturating regions where |f'|≈0, (2) in deep networks where gradient norms multiply and shrink exponentially. Solution: ReLU, residual connections, careful init.",
+        kc:["Backpropagation","Vanishing gradients","Chain rule","ReLU"] },
+      { q:"Explain why Batch Normalization works. What are its mathematical guarantees and practical trade-offs?",
+        a:"BN normalizes each mini-batch: x̂ᵢ=(xᵢ−μ_B)/√(σ²_B+ε), then applies learnable scale/shift: yᵢ=γx̂ᵢ+β. Benefits: (1) Reduces internal covariate shift, (2) Acts as regularizer (stochastic batch statistics), (3) Allows higher LRs, (4) Smooths loss landscape. Trade-offs: (1) Batch-size dependent—small batches give noisy estimates→use GroupNorm/LayerNorm, (2) Incompatible with online learning, (3) Different behavior train vs test (running stats). At inference: uses exponential moving averages of μ and σ.",
+        kc:["BatchNorm","Covariate shift","Normalization","Inference vs training"] }
+    ]
+  },
+  {
+    id: 2,
+    t: "Convolutional Neural Networks",
+    int: "CRITICAL",
+    hrs: "20–25",
+    ch: "Notebook 2",
+    c: "#2d5a3d",
+    topics: [
+      { id:"w2t1", n:"Convolution Operation", d:"Discrete cross-correlation, stride, padding, output dimensions, receptive field", ch:"§2.1", sk:["Output dims","Receptive field"], p:"CRITICAL" },
+      { id:"w2t2", n:"Pooling and Feature Maps", d:"Max/avg pooling, Global Average Pooling, translation invariance", ch:"§2.2", sk:["Pooling types","GAP"], p:"HIGH" },
+      { id:"w2t3", n:"Classic Architectures", d:"AlexNet, VGG, GoogLeNet (Inception), ResNet—skip connections and gradient flow", ch:"§2.3", sk:["ResNet math","Skip connections"], p:"CRITICAL" },
+      { id:"w2t4", n:"Modern CNN Designs", d:"DenseNet, EfficientNet, MobileNet (depthwise separable); width/depth/resolution scaling", ch:"§2.4", sk:["Depthwise sep conv","EfficientNet compound scaling"], p:"HIGH" },
+      { id:"w2t5", n:"CNN Training Techniques", d:"Transfer learning, fine-tuning, frozen layers, data augmentation, mixup/cutmix", ch:"§2.5", sk:["Transfer learning","Fine-tuning strategy"], p:"CRITICAL" },
+      { id:"w2t6", n:"Visualization & Interpretability", d:"Filter visualization, saliency maps, Grad-CAM, Class Activation Mapping", ch:"§2.6", sk:["Grad-CAM","Saliency maps"], p:"HIGH" }
+    ],
+    qs: [
+      { q:"What is the output size of a Conv2D layer with input 224×224, 64 filters, kernel 3×3, stride 2, padding 1? Compute parameter count.",
+        a:"Output size: H_out = ⌊(224 + 2·1 − 3)/2⌋ + 1 = ⌊223/2⌋ + 1 = 111 + 1 = 112. So output is 112×112×64. Parameter count (assuming input has C_in channels): weight params = 64 × C_in × 3 × 3; biases = 64. If C_in=3: weights=1,728, biases=64, total=1,792 parameters. Receptive field of first conv: 3×3. After stride=2, effective spatial coverage doubles.",
+        kc:["Conv arithmetic","Output dimensions","Parameter count","Receptive field"] },
+      { q:"Explain residual connections in ResNet. How do they solve the degradation problem?",
+        a:"ResNet learns F(x)=H(x)−x (residual) rather than H(x) directly. Block: y=F(x,{Wᵢ})+x. Gradient: ∂L/∂x = ∂L/∂y · (∂F/∂x + I). The identity term I ensures gradients flow directly back even if ∂F/∂x≈0, preventing vanishing gradients in deep networks. The degradation problem (deeper networks have higher train error) is solved because the identity mapping is trivially learned (set weights to zero). Practical benefit: enables training of 100–1000+ layer networks.",
+        kc:["ResNet","Skip connections","Vanishing gradients","Degradation problem"] }
+    ]
+  },
+  {
+    id: 3,
+    t: "Recurrent Networks and Sequence Models",
+    int: "CRITICAL",
+    hrs: "20–25",
+    ch: "Notebook 3",
+    c: "#5c3a1a",
+    topics: [
+      { id:"w3t1", n:"Vanilla RNN", d:"Hidden state dynamics, BPTT, exploding/vanishing gradients, teacher forcing", ch:"§3.1", sk:["BPTT derivation","Gradient issues"], p:"CRITICAL" },
+      { id:"w3t2", n:"LSTM Architecture", d:"Forget/input/output gates, cell state, mathematical derivation", ch:"§3.2", sk:["LSTM equations","Gate intuition"], p:"CRITICAL" },
+      { id:"w3t3", n:"GRU and Variants", d:"GRU (reset/update gates), BiLSTM, stacked RNNs; parameter efficiency", ch:"§3.3", sk:["GRU vs LSTM","Bidirectional"], p:"HIGH" },
+      { id:"w3t4", n:"Sequence-to-Sequence & Attention", d:"Encoder-decoder, fixed bottleneck problem, Bahdanau/Luong attention", ch:"§3.4", sk:["Seq2seq","Attention mechanism"], p:"CRITICAL" },
+      { id:"w3t5", n:"Transformer Architecture", d:"Multi-head self-attention, positional encoding, layer norm, FFN, scaling", ch:"§3.5", sk:["Self-attention math","MHSA","Positional encoding"], p:"CRITICAL" },
+      { id:"w3t6", n:"Practical Sequence Tasks", d:"Language modeling, NER, time-series forecasting with RNN vs Transformer", ch:"§3.6", sk:["LM perplexity","Sequence labeling"], p:"HIGH" }
+    ],
+    qs: [
+      { q:"Derive the LSTM equations. Explain how the cell state solves the vanishing gradient problem.",
+        a:"LSTM gates: fₜ=σ(Wf[hₜ₋₁,xₜ]+bf), iₜ=σ(Wi[hₜ₋₁,xₜ]+bi), g̃ₜ=tanh(Wg[hₜ₋₁,xₜ]+bg), oₜ=σ(Wo[hₜ₋₁,xₜ]+bo). Cell update: cₜ=fₜ⊙cₜ₋₁+iₜ⊙g̃ₜ. Hidden state: hₜ=oₜ⊙tanh(cₜ). Gradient flow through cell: ∂cₜ/∂cₜ₋₁=fₜ (elementwise multiplication). Since fₜ∈(0,1) can be close to 1, gradient flows without repeated multiplication by small weights. The highway through cell state prevents vanishing. Vanishing still possible if forget gate saturates to 0.",
+        kc:["LSTM equations","Cell state","Forget gate","Vanishing gradients"] },
+      { q:"Explain multi-head self-attention. What does each head learn, and why is positional encoding necessary?",
+        a:"MHSA: For each head i, compute Qᵢ=XWᵢQ, Kᵢ=XWᵢK, Vᵢ=XWᵢV, then Headᵢ=softmax(QᵢKᵢᵀ/√dₖ)Vᵢ. Output: MultiHead=Concat(Head₁,...,Headₕ)Wₒ. Each head learns different relationships: syntactic dependencies, coreference, positional patterns, etc. Positional encoding needed because self-attention is permutation-equivariant—the same output regardless of token order without positional information. Sinusoidal PE: PE(pos,2i)=sin(pos/10000^(2i/d)), allowing extrapolation. Learned PE also common.",
+        kc:["Multi-head attention","Positional encoding","Permutation equivariance","Transformer"] }
+    ]
+  },
+  {
+    id: 4,
+    t: "Object Detection and Segmentation",
+    int: "HIGH",
+    hrs: "18–22",
+    ch: "Notebook 4",
+    c: "#4a1a5c",
+    topics: [
+      { id:"w4t1", n:"Detection Fundamentals", d:"Sliding window, anchor boxes, IoU, NMS, AP/mAP evaluation", ch:"§4.1", sk:["IoU computation","mAP","NMS algorithm"], p:"CRITICAL" },
+      { id:"w4t2", n:"Two-Stage Detectors", d:"R-CNN family: R-CNN, Fast R-CNN, Faster R-CNN (RPN), ROI Pooling/Align", ch:"§4.2", sk:["RPN","ROI Align","Faster RCNN"], p:"HIGH" },
+      { id:"w4t3", n:"One-Stage Detectors", d:"YOLO (v1–v8), SSD, anchor-free FCOS/CenterNet; speed-accuracy tradeoff", ch:"§4.3", sk:["YOLO loss","Anchor-free","Speed vs accuracy"], p:"HIGH" },
+      { id:"w4t4", n:"Feature Pyramid Networks", d:"FPN multi-scale feature hierarchy, top-down pathway, lateral connections", ch:"§4.4", sk:["FPN","Multi-scale","Lateral connections"], p:"HIGH" },
+      { id:"w4t5", n:"Semantic Segmentation", d:"FCN, encoder-decoder (U-Net), DeepLab (dilated conv, ASPP), pixel-wise loss", ch:"§4.5", sk:["U-Net","Dilated convolution","ASPP"], p:"HIGH" },
+      { id:"w4t6", n:"Instance & Panoptic Segmentation", d:"Mask R-CNN (mask head), panoptic FPN, DETR (transformer detection end-to-end)", ch:"§4.6", sk:["Mask RCNN","Panoptic","DETR"], p:"MEDIUM" }
+    ],
+    qs: [
+      { q:"Explain the YOLO loss function. What does each term optimize?",
+        a:"YOLO total loss (v1 formulation): L = λcoord·Σ(1ᵒᵇʲᵢⱼ)[(xᵢ−x̂ᵢ)²+(yᵢ−ŷᵢ)²] + λcoord·Σ(1ᵒᵇʲᵢⱼ)[(√wᵢ−√ŵᵢ)²+(√hᵢ−√ĥᵢ)²] + Σ(1ᵒᵇʲᵢⱼ)(Cᵢ−Ĉᵢ)² + λnoobj·Σ(1ⁿᵒᵒᵇʲᵢⱼ)(Cᵢ−Ĉᵢ)² + Σ(1ᵒᵇʲᵢ)Σₖ(pᵢ(c)−p̂ᵢ(c))². Terms: (1) Box coordinate regression (√ transforms penalize small/large boxes equally), (2) Object confidence, (3) No-object confidence (down-weighted by λnoobj to handle class imbalance), (4) Class probability. λcoord=5, λnoobj=0.5 are typical.",
+        kc:["YOLO loss","Objectness","Box regression","Class imbalance"] },
+      { q:"What is the difference between semantic, instance, and panoptic segmentation?",
+        a:"Semantic segmentation: assigns a class label to every pixel; no instance distinction (two people = same label). Instance segmentation: detects and segments each object instance separately; can differentiate two people but ignores background. Panoptic segmentation: unified task—'things' (countable objects) get instance IDs, 'stuff' (amorphous background) gets semantic labels. Evaluation: semantic uses mIoU; instance uses AP at IoU thresholds (like detection); panoptic uses PQ=SQ×RQ (segmentation quality × recognition quality).",
+        kc:["Segmentation types","mIoU","Panoptic quality","Things vs stuff"] }
+    ]
+  },
+  {
+    id: 5,
+    t: "Representation Learning and Transfer",
+    int: "CRITICAL",
+    hrs: "20–25",
+    ch: "Notebook 5",
+    c: "#1a4a5c",
+    topics: [
+      { id:"w5t1", n:"Embeddings and Metric Learning", d:"Word2Vec, contrastive loss, triplet loss, NT-Xent; embedding space geometry", ch:"§5.1", sk:["Triplet loss","Contrastive","Embedding geometry"], p:"CRITICAL" },
+      { id:"w5t2", n:"Self-Supervised Learning (SSL)", d:"SimCLR, MoCo, BYOL, DINO; augmentation strategy, projection head, collapse", ch:"§5.2", sk:["SimCLR framework","Collapse problem","Stop gradient"], p:"CRITICAL" },
+      { id:"w5t3", n:"Transfer Learning Strategies", d:"Feature extraction vs fine-tuning, domain gap, catastrophic forgetting", ch:"§5.3", sk:["When to fine-tune","Domain adaptation"], p:"CRITICAL" },
+      { id:"w5t4", n:"Vision Transformers (ViT)", d:"Patch embedding, class token, ViT-B/16 notation, ViT vs CNN inductive biases", ch:"§5.4", sk:["Patch tokenization","ViT scaling","Inductive bias"], p:"CRITICAL" },
+      { id:"w5t5", n:"Foundation Models & CLIP", d:"Pre-training at scale, CLIP contrastive image-text, zero-shot evaluation", ch:"§5.5", sk:["CLIP loss","Zero-shot","Contrastive image-text"], p:"HIGH" },
+      { id:"w5t6", n:"Continual and Few-Shot Learning", d:"Catastrophic forgetting, EWC, prototypical networks, MAML", ch:"§5.6", sk:["EWC","Prototypical networks","MAML"], p:"MEDIUM" }
+    ],
+    qs: [
+      { q:"Explain the SimCLR framework. What is the NT-Xent loss and why is it effective?",
+        a:"SimCLR: (1) Take image xᵢ, apply two random augmentations → {x̃ᵢ, x̃ⱼ} (a positive pair). (2) Encode both: hᵢ=f(x̃ᵢ), hⱼ=f(x̃ⱼ). (3) Project: zᵢ=g(hᵢ), zⱼ=g(hⱼ). NT-Xent loss for pair (i,j): L = −log[exp(sim(zᵢ,zⱼ)/τ) / Σ_{k≠i} exp(sim(zᵢ,zₖ)/τ)] where sim=cosine similarity, τ=temperature. Effectiveness: (1) Large batch provides many negatives in-batch, (2) Temperature τ controls hardness of negatives, (3) Projection head maps to better contrastive space while encoder retains useful features, (4) Strong augmentations force learning semantically invariant representations.",
+        kc:["SimCLR","NT-Xent","Contrastive learning","Augmentation"] },
+      { q:"Compare Vision Transformers (ViT) with CNNs in terms of inductive biases, data efficiency, and scaling behaviour.",
+        a:"CNNs have built-in inductive biases: translation equivariance, locality (local receptive fields). These make CNNs data-efficient. ViT has no such biases: each patch attends to all others globally. Consequence: ViT requires ~10× more data (or pre-training at scale) to match CNN performance on small datasets. However at scale (JFT-300M): ViT significantly outperforms CNN equivalents with fewer compute FLOPs—better scaling behaviour due to quadratic attention capturing global context. Hybrid models (CvT, Swin) combine local conv with global attention for best of both.",
+        kc:["ViT","Inductive bias","Scaling laws","CNN vs Transformer"] }
+    ]
+  },
+  {
+    id: 6,
+    t: "Generative Models",
+    int: "CRITICAL",
+    hrs: "22–28",
+    ch: "Notebook 6",
+    c: "#3d5c1a",
+    topics: [
+      { id:"w6t1", n:"Variational Autoencoders (VAE)", d:"ELBO derivation, reparameterization trick, KL divergence, posterior collapse", ch:"§6.1", sk:["ELBO","Reparameterization","KL term"], p:"CRITICAL" },
+      { id:"w6t2", n:"Generative Adversarial Networks (GAN)", d:"Minimax objective, JS divergence, mode collapse, training instability", ch:"§6.2", sk:["GAN objective","Mode collapse","Minimax"], p:"CRITICAL" },
+      { id:"w6t3", n:"Advanced GAN Variants", d:"DCGAN, WGAN (Wasserstein distance + Lipschitz), StyleGAN (AdaIN, mapping network)", ch:"§6.3", sk:["WGAN","Wasserstein distance","StyleGAN AdaIN"], p:"HIGH" },
+      { id:"w6t4", n:"Diffusion Models", d:"Forward/reverse process, DDPM, noise schedule, DDIM sampling, score matching", ch:"§6.4", sk:["DDPM math","Score matching","Fast sampling"], p:"CRITICAL" },
+      { id:"w6t5", n:"Conditional Generation", d:"cGAN, class-conditional diffusion, CFG (classifier-free guidance), inpainting", ch:"§6.5", sk:["Classifier-free guidance","Conditional diffusion"], p:"HIGH" },
+      { id:"w6t6", n:"Evaluation of Generative Models", d:"FID, IS, Precision/Recall, CLIP score, perceptual quality vs diversity tradeoff", ch:"§6.6", sk:["FID computation","IS","Quality vs diversity"], p:"CRITICAL" }
+    ],
+    qs: [
+      { q:"Derive the ELBO for a VAE and explain the reparameterization trick. When does posterior collapse occur?",
+        a:"ELBO: log p(x) ≥ E_{q(z|x)}[log p(x|z)] − KL(q(z|x) ∥ p(z)). First term: reconstruction (maximize likelihood). Second term: KL regularizer towards prior N(0,I). Standard q(z|x)=N(μ_φ(x), diag(σ²_φ(x))). Reparameterization: z=μ_φ(x)+σ_φ(x)⊙ε, ε~N(0,I). This makes gradient ∂L/∂φ computable (otherwise expectation over z∼q(z|x) blocks gradient). Posterior collapse: occurs when KL term dominates or decoder is too powerful—q(z|x)→p(z)=N(0,I), ignoring x. Fixes: KL annealing (β-VAE), free bits, weakening decoder.",
+        kc:["ELBO","Reparameterization","Posterior collapse","VAE"] },
+      { q:"Explain the DDPM forward and reverse processes. How does it differ from GANs as a generative model?",
+        a:"DDPM Forward: q(xₜ|xₜ₋₁)=N(xₜ;√(1−βₜ)xₜ₋₁, βₜI). After T steps: q(xₜ|x₀)=N(xₜ;√ᾱₜx₀,(1−ᾱₜ)I) where ᾱₜ=∏βᵢ. This progressively adds Gaussian noise until x_T≈N(0,I). Reverse: p_θ(xₜ₋₁|xₜ)=N(μ_θ(xₜ,t), σ²ₜI). Model ε_θ predicts noise: L=‖ε−ε_θ(√ᾱₜx₀+√(1−ᾱₜ)ε,t)‖². GAN differences: (1) GANs single-step generation, DDPMs iterative (slow at inference), (2) DDPMs have stable training (no adversarial game), (3) DDPMs produce more diverse samples, (4) DDPMs require DDIM/DPM-Solver for fast sampling.",
+        kc:["DDPM","Diffusion process","GAN vs diffusion","Score matching"] }
+    ]
+  }
+];
+
+// ─── Main App ─────────────────────────────────────────────────────────────────
+function App() {
+  var _e = us({}), exp = _e[0], sE = _e[1];
+  var _d = us({}), done = _d[0], sD = _d[1];
+  var _q = us({}), qo = _q[0], sQ = _q[1];
+  var _a = us({}), ao = _a[0], sA = _a[1];
+
+  ue(function() {
+    try { var s = localStorage.getItem("dla_rev1"); if (s) sD(JSON.parse(s)); } catch(e) {}
+  }, []);
+  ue(function() {
+    try { localStorage.setItem("dla_rev1", JSON.stringify(done)); } catch(e) {}
+  }, [done]);
+
+  var tot = W.reduce(function(s, w) { return s + w.topics.length; }, 0);
+  var dn = Object.values(done).filter(Boolean).length;
+  var pct = Math.round((dn / tot) * 100);
+
+  var wp = function(w) {
+    var d = w.topics.filter(function(t) { return done[t.id]; }).length;
+    return { d: d, t: w.topics.length, p: Math.round((d / w.topics.length) * 100) };
+  };
+
+  var flip = function(fn, k) {
+    fn(function(p) {
+      var n = {}; for (var x in p) n[x] = p[x]; n[k] = !p[k]; return n;
+    });
+  };
+
+  return h("div", null,
+    // ── Header ──────────────────────────────────────────────────────────────
+    h("div", { className: "hdr" }, h("div", { className: "hdr-inner" },
+      h("div", { style: { fontFamily: M, fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: "#94a3b8", marginBottom: 10 } },
+        "PhD in Data Science · Comprehensive Exam Reviewer"),
+      h("h1", { style: { fontSize: 34, fontWeight: 800, margin: "0 0 6px", lineHeight: 1.15, color: "#fff" } },
+        "Deep Learning Applications"),
+      h("div", { style: { fontSize: 17, color: "#cbd5e1", fontWeight: 300, marginBottom: 8 } },
+        "6-Week Study Plan & Notebooks — Neural Networks, Vision, Generation"),
+      h("div", { style: { fontSize: 14, color: "#64748b", fontFamily: M, marginBottom: 22 } },
+        "Jerald B. Bongalos"),
+      h("div", { style: { display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" } },
+        h("div", { className: "pbar" }, h("div", { className: "pbar-fill", style: { width: pct + "%" } })),
+        h("span", { style: { fontFamily: M, fontSize: 12, color: "#94a3b8" } },
+          dn + "/" + tot + " topics · " + pct + "%")
+      )
+    )),
+
+    // ── Body ────────────────────────────────────────────────────────────────
+    h("div", { className: "body-wrap" },
+      W.map(function(w) {
+        var ww = wp(w), o = exp[w.id], qOp = qo[w.id];
+        return h("div", { key: w.id, className: "week" + (o ? " open" : "") },
+
+          // Week header
+          h("div", { className: "wh", onClick: function() { flip(sE, w.id); } },
+            h("div", { className: "arr" + (o ? " open" : "") }, "▸"),
+            h("div", { style: { flex: 1, minWidth: 0 } },
+              h("div", { style: { display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" } },
+                h("span", { style: { fontWeight: 700, fontSize: 17 } }, "Week " + w.id + ": " + w.t),
+                h("span", { style: { background: IBS[w.int] || "#6b7280", color: "#fff", fontSize: 10, fontFamily: M, padding: "2px 8px", borderRadius: 4, letterSpacing: .5 } },
+                  w.int)
+              ),
+              h("div", { style: { fontSize: 12, color: "#9ca3af", marginTop: 3, fontFamily: M } },
+                w.ch + " · " + w.hrs + " hrs/wk · " + ww.d + "/" + ww.t + " done")
+            ),
+            h("div", { className: "circ", style: { border: "3px solid " + (ww.p === 100 ? "#10b981" : "#e5e7eb"), background: ww.p === 100 ? "#ecfdf5" : "#fff" } },
+              h("span", { style: { fontFamily: M, fontSize: 11, fontWeight: 600, color: ww.p === 100 ? "#059669" : "#9ca3af" } },
+                ww.p + "%")
+            )
+          ),
+
+          // Expanded content
+          o && h("div", { className: "wb" },
+
+            // Notebook buttons — FIXED: real GitHub links
+            h("div", { className: "nb-row" },
+              h("a", {
+                href: colabUrl(w.id),
+                target: "_blank",
+                rel: "noopener noreferrer",
+                className: "btn-colab",
+                onClick: function(e) { e.stopPropagation(); }
+              },
+                "🚀 Open in Colab"
+              ),
+              h("a", {
+                href: downloadUrl(w.id),
+                target: "_blank",
+                rel: "noopener noreferrer",
+                className: "btn-dl",
+                download: NB[w.id],
+                onClick: function(e) { e.stopPropagation(); }
+              },
+                "⬇ Download .ipynb"
+              ),
+              h("span", { style: { fontSize: 11, color: "#9ca3af", fontFamily: M } }, NB[w.id])
+            ),
+
+            // Topics
+            h("div", { className: "topics" },
+              w.topics.map(function(t) {
+                var c = pc(t.p), d = done[t.id];
+                return h("div", { key: t.id, className: "topic", style: { borderLeftColor: w.c + "30" } },
+                  h("div", { style: { display: "flex", alignItems: "flex-start", gap: 10 } },
+                    h("div", { className: "chk" + (d ? " done" : ""), onClick: function(e) { e.stopPropagation(); flip(sD, t.id); } },
+                      d && h("span", { style: { color: "#fff", fontSize: 12 } }, "✓")
+                    ),
+                    h("div", { style: { flex: 1, minWidth: 0 } },
+                      h("div", { style: { display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" } },
+                        h("span", { style: { fontWeight: 600, fontSize: 15, textDecoration: d ? "line-through" : "none", color: d ? "#9ca3af" : "#1a1a1a" } }, t.n),
+                        h("span", { className: "pri", style: { background: c.bg, color: c.tx, border: "1px solid " + c.bd } }, t.p)
+                      ),
+                      h("div", { style: { fontSize: 13, color: "#6b7280", marginTop: 3 } }, t.d),
+                      h("div", { style: { marginTop: 4, display: "flex", flexWrap: "wrap", gap: 4, alignItems: "center" } },
+                        h("span", { style: { fontSize: 11, color: "#3b82f6", fontFamily: M } }, "📖 " + t.ch),
+                        t.sk.map(function(s, i) { return h("span", { key: i, className: "sk" }, s); })
+                      )
+                    )
+                  )
+                );
+              })
+            ),
+
+            // Q&A
+            w.qs && w.qs.length > 0 && h("div", { className: "qs-sec" },
+              h("div", {
+                onClick: function() { flip(sQ, w.id); },
+                style: { cursor: "pointer", padding: "12px 0 6px", display: "flex", alignItems: "center", gap: 8, userSelect: "none" }
+              },
+                h("span", { style: { fontSize: 13, color: "#7c3aed", transform: qOp ? "rotate(90deg)" : "", transition: "transform 0.15s" } }, "▸"),
+                h("span", { style: { fontWeight: 700, fontSize: 14, color: "#5b21b6" } },
+                  "Oral Exam Questions (" + w.qs.length + ")")
+              ),
+              qOp && w.qs.map(function(q, qi) {
+                var aid = w.id + "-" + qi, aO = ao[aid];
+                return h("div", { key: qi, className: "q-item" + (aO ? " open" : "") },
+                  h("div", { style: { fontWeight: 600, fontSize: 14, color: "#1a1a1a", lineHeight: 1.5 } },
+                    "Q" + (qi + 1) + ". " + q.q),
+                  h("button", {
+                    onClick: function() { flip(sA, aid); },
+                    style: { marginTop: 8, padding: "4px 14px", fontSize: 11, fontFamily: M, border: "1px solid " + (aO ? "#8b5cf6" : "#d1d5db"), borderRadius: 5, background: aO ? "#ede9fe" : "#fff", cursor: "pointer", color: aO ? "#5b21b6" : "#6b7280", fontWeight: aO ? 600 : 400 }
+                  }, aO ? "Hide Answer ▴" : "Show Model Answer ▾"),
+                  aO && h("div", null,
+                    h("div", { className: "ans-box" },
+                      h("div", { style: { fontWeight: 700, fontSize: 11, color: "#5b21b6", fontFamily: M, marginBottom: 8, letterSpacing: 1 } }, "MODEL ANSWER"),
+                      q.a
+                    ),
+                    q.kc && h("div", { className: "kc-row" },
+                      h("span", { style: { fontSize: 11, color: "#6b7280", fontFamily: M } }, "Key Concepts:"),
+                      q.kc.map(function(k, ki) { return h("span", { key: ki, className: "kc" }, k); })
+                    )
+                  )
+                );
+              })
+            )
+          )
+        );
+      }),
+
+      // Tips
+      h("div", { className: "tips" },
+        h("div", { style: { fontWeight: 700, fontSize: 17, color: "#1a1a1a", marginBottom: 12 } },
+          "💡 DLA Exam Study Tips"),
+        [
+          "Implement every major architecture from scratch in PyTorch — understanding comes from building",
+          "Derive backprop for CNNs, LSTMs, and attention mechanisms without notes before the exam",
+          "Know the tradeoffs: ResNet vs EfficientNet, LSTM vs Transformer, GAN vs Diffusion",
+          "Be able to compute output dimensions and parameter counts for any architecture",
+          "Understand evaluation metrics: mAP for detection, FID for generation, mIoU for segmentation",
+          "Practice explaining design choices: why ReLU over sigmoid, why LayerNorm in Transformers",
+          "Connect DLA to ATSA where relevant: RNNs for time series, Transformers for sequences"
+        ].map(function(t, i) {
+          return h("div", { key: i, className: "tip", style: { marginTop: i ? 5 : 0 } }, t);
+        })
+      )
+    ),
+
+    h("div", { className: "ftr" },
+      "DLA Comprehensive Exam Reviewer · Jerald B. Bongalos · Notebooks: " + REPO)
+  );
+}
+
+ReactDOM.render(h(App), document.getElementById("root"));
+</script>
+</body>
+</html>
